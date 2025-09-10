@@ -76,7 +76,7 @@ export const userResolver = {
      const token = jwt.sign(
   { userId: user.id, role: user.role },
   process.env.JWT_SECRET, // now this will have a value
-  { expiresIn: "1h" }
+  { expiresIn: "3h" }
 );
 
       return { token, user };

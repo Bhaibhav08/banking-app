@@ -6,6 +6,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { typeDefs, resolvers } from "./graphql/schema.js";
 import { authMiddleware } from './middleware/auth.js';
+import accountRoutes from "./routes/accountRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import loanRoutes from "./routes/loanRoutes.js";
+
 
 
 dotenv.config();
@@ -21,7 +25,10 @@ const startServer = async () => {
   await server.start();
 
   app.use(cors());
-  app.use(express.json()); // ✅ Add this middleware to parse JSON request bodies
+  app.use(express.json()); 
+  app.use("/api/accounts", accountRoutes);
+  app.use("/api/auth", authRoutes);
+  app.use("/api/loans", loanRoutes);
 
   app.use(
     '/graphql',
@@ -37,7 +44,7 @@ const startServer = async () => {
     .then(() => {
       console.log("MongoDB connected");
 
-      const PORT = process.env.PORT || 4000;
+      const PORT = process.env.PORT || 3000;
       app.listen(PORT, () => {
         console.log(`Server ready at http://localhost:${PORT}/graphql`);
       });
